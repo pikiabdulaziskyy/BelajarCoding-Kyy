@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Portofolio Kyy - Full Stack Web Developer</title>
+    <title>Portofolio Piki Abdul Azis - Full Stack Web Developer</title>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
             <div class="brand">
                 <span class="brand-logo">K</span>
                 <div>
-                    <h1>Kyy</h1>
+                    <h1>Piki Abdul Azis</h1>
                     <p class="brand-tagline">Full Stack Web Developer &amp; Desainer</p>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                     <span>Proyek</span>
                     <h2>Beberapa Hasil Kerja</h2>
                 </div>
-                
+
                 <!-- Project Filter -->
                 <div class="filter-container">
                     <div class="filter-group">
@@ -176,7 +176,7 @@
                     <h2>Siap bekerja sama?</h2>
                 </div>
                 <p>Kirim pesan jika kamu ingin membuat website baru atau mengembangkan proyek yang sudah ada.</p>
-                
+
                 <!-- Contact Form -->
                 <form id="contact-form" class="contact-form" onsubmit="handleContactSubmit(event)">
                     <div class="form-row">
@@ -379,7 +379,7 @@
                     JSON.parse(p.technologies).forEach(t => techs.add(t));
                 }
             });
-            
+
             const select = document.getElementById('filter-tech');
             techs.forEach(tech => {
                 const option = document.createElement('option');
@@ -505,7 +505,7 @@
         document.getElementById('search-input').addEventListener('input', (e) => {
             clearTimeout(searchTimeout);
             const keyword = e.target.value.trim();
-            
+
             if (keyword.length < 2) {
                 closeSearchModal();
                 return;

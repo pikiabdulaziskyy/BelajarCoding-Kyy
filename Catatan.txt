@@ -4,7 +4,7 @@
 
 1. Ctrl + S
 2. git add .
-3. git commit -m "Deskripsi perubahan"
+3. git commit -m "Belajar Coding"
 4. git push
 
 ## Cek Status
