@@ -401,9 +401,9 @@ define('APP_NAME', 'Nama Aplikasi Anda');
 
 ## 📞 Support & Contact
 
-📧 Email: admin@example.com
-🌐 Website: https://example.com
-💼 LinkedIn: [Your Profile]
+📧 Email: PikiAbdulAzisKyy@gmail.com
+🌐 Website: -
+💼 LinkedIn: -
 
 ---
 
