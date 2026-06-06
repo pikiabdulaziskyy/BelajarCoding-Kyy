@@ -1,0 +1,39 @@
+# PHP & Backend
+config.local.php
+.env
+.env.local
+
+# Data Storage
+data/
+logs/
+uploads/
+
+# IDE & Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# System Files
+.htaccess
+error_log
+access_log
+
+# Development
+node_modules/
+composer.lock
+package-lock.json
+
+# Cache
+*.cache
+.cache/
