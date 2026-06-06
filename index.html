@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Portofolio Saya</title>
+    <title>Portofolio Kyy - Full Stack Web Developer</title>
 </head>
 
 <body>
@@ -15,16 +15,31 @@
                 <span class="brand-logo">K</span>
                 <div>
                     <h1>Kyy</h1>
-                    <p class="brand-tagline">Web Developer &amp; Desainer</p>
+                    <p class="brand-tagline">Full Stack Web Developer &amp; Desainer</p>
                 </div>
             </div>
             <nav>
+                <input type="search" id="search-input" class="search-box" placeholder="Search...">
                 <a href="#about">Tentang</a>
+                <a href="#skills">Skill</a>
+                <a href="#experience">Pengalaman</a>
                 <a href="#projects">Proyek</a>
+                <a href="#blog">Blog</a>
+                <a href="#testimonials">Testimoni</a>
                 <a href="#contact">Kontak</a>
+                <a href="login.php" class="btn-login">Admin Login</a>
             </nav>
         </div>
     </header>
+
+    <!-- Search Results Modal -->
+    <div id="search-modal" class="modal">
+        <div class="modal-content search-modal-content">
+            <button class="modal-close" onclick="closeSearchModal()">&times;</button>
+            <h2>Search Results</h2>
+            <div id="search-results" class="search-results-container"></div>
+        </div>
+    </div>
 
     <main>
         <section class="hero">
@@ -79,31 +94,132 @@
                     <span>Proyek</span>
                     <h2>Beberapa Hasil Kerja</h2>
                 </div>
-                <div class="project-grid">
-                    <article class="project-card">
-                        <h3>Website Portofolio</h3>
-                        <p>Website personal untuk menampilkan proyek, pengalaman, dan kontak.</p>
-                    </article>
-                    <article class="project-card">
-                        <h3>Landing Page</h3>
-                        <p>Halaman promosi dengan desain bersih dan tombol CTA yang efektif.</p>
-                    </article>
-                    <article class="project-card">
-                        <h3>Blog Responsif</h3>
-                        <p>Blog sederhana yang dapat dibaca dengan nyaman di perangkat apa pun.</p>
-                    </article>
+                
+                <!-- Project Filter -->
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label for="filter-tech">Filter by Technology:</label>
+                        <select id="filter-tech" onchange="filterByTechnology()">
+                            <option value="">Semua Teknologi</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-year">Filter by Year:</label>
+                        <select id="filter-year" onchange="filterByYear()">
+                            <option value="">Semua Tahun</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="project-grid" id="projects-list">
+                    <p class="loading">Loading projects...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS Section -->
+        <section id="skills" class="section skills">
+            <div class="container">
+                <div class="section-header">
+                    <span>Skills</span>
+                    <h2>Keahlian & Kemampuan</h2>
+                </div>
+                <div class="skills-grid" id="skills-list">
+                    <p class="loading">Loading skills...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE Section -->
+        <section id="experience" class="section experience">
+            <div class="container">
+                <div class="section-header">
+                    <span>Experience</span>
+                    <h2>Pengalaman Kerja</h2>
+                </div>
+                <div class="timeline" id="experience-list">
+                    <p class="loading">Loading experiences...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS Section -->
+        <section id="testimonials" class="section testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <span>Testimonials</span>
+                    <h2>Apa Kata Klien?</h2>
+                </div>
+                <div class="testimonials-grid" id="testimonials-list">
+                    <p class="loading">Loading testimonials...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG Section -->
+        <section id="blog" class="section blog">
+            <div class="container">
+                <div class="section-header">
+                    <span>Blog</span>
+                    <h2>Artikel & Tips</h2>
+                </div>
+                <div class="blog-grid" id="blog-list">
+                    <p class="loading">Loading blog posts...</p>
                 </div>
             </div>
         </section>
 
         <section id="contact" class="section contact">
-            <div class="container contact-card">
-                <div>
+            <div class="container">
+                <div class="section-header">
                     <span>Kontak</span>
                     <h2>Siap bekerja sama?</h2>
-                    <p>Kirim pesan jika kamu ingin membuat website baru atau mengembangkan proyek yang sudah ada.</p>
                 </div>
-                <a class="button button-secondary" href="mailto:kyy@example.com">Email saya</a>
+                <p>Kirim pesan jika kamu ingin membuat website baru atau mengembangkan proyek yang sudah ada.</p>
+                
+                <!-- Contact Form -->
+                <form id="contact-form" class="contact-form" onsubmit="handleContactSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contact-name">Nama</label>
+                            <input type="text" id="contact-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Email</label>
+                            <input type="email" id="contact-email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contact-phone">No. Telepon</label>
+                            <input type="tel" id="contact-phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-subject">Subjek</label>
+                            <input type="text" id="contact-subject" name="subject" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-message">Pesan</label>
+                        <textarea id="contact-message" name="message" rows="6" required></textarea>
+                    </div>
+
+                    <button type="submit" class="button">Kirim Pesan</button>
+                </form>
+
+                <!-- Newsletter Subscription -->
+                <div class="newsletter-section">
+                    <h3>Subscribe to Newsletter</h3>
+                    <p>Dapatkan update artikel dan tips terbaru langsung ke email Anda</p>
+                    <form id="newsletter-form" class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+                        <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required>
+                        <input type="text" id="newsletter-name" name="name" placeholder="Your name" required>
+                        <button type="submit" class="button">Subscribe</button>
+                    </form>
+                    <p id="newsletter-message"></p>
+                </div>
             </div>
         </section>
     </main>
@@ -113,6 +229,345 @@
             <p>© 2026 Kyy. Semua hak cipta dilindungi.</p>
         </div>
     </footer>
+
+    <script>
+        // Load Projects
+        async function loadProjects() {
+            try {
+                const response = await fetch('api.php?action=get_projects');
+                const data = await response.json();
+                if (data.success && data.data.length > 0) {
+                    const html = data.data.map(project => `
+                        <article class="project-card">
+                            ${project.image_url ? `<img src="${project.image_url}" alt="${project.title}">` : ''}
+                            <h3>${project.title}</h3>
+                            <p>${project.description}</p>
+                            ${project.technologies ? `<div class="tech-tags">${JSON.parse(project.technologies).map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>` : ''}
+                            <div class="project-footer">
+                                <span class="rating">⭐ ${project.rating}</span>
+                                ${project.url ? `<a href="${project.url}" target="_blank" class="btn-small">View</a>` : ''}
+                            </div>
+                        </article>
+                    `).join('');
+                    document.getElementById('projects-list').innerHTML = html;
+
+                    // Load filter options
+                    loadTechFilters(data.data);
+                    loadYearFilters(data.data);
+                }
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
+        }
+
+        // Load Skills
+        async function loadSkills() {
+            try {
+                const response = await fetch('portfolio.php?action=get_skills');
+                const data = await response.json();
+                if (data.success && data.data.length > 0) {
+                    const groupedByCategory = {};
+                    data.data.forEach(skill => {
+                        if (!groupedByCategory[skill.category]) {
+                            groupedByCategory[skill.category] = [];
+                        }
+                        groupedByCategory[skill.category].push(skill);
+                    });
+
+                    const html = Object.entries(groupedByCategory).map(([category, skills]) => `
+                        <div class="skill-category">
+                            <h4>${category}</h4>
+                            ${skills.map(skill => `
+                                <div class="skill-item">
+                                    <div class="skill-header">
+                                        <span class="skill-name">${skill.name}</span>
+                                        <span class="skill-level">Level ${skill.level}/5</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: ${skill.percentage}%"></div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `).join('');
+                    document.getElementById('skills-list').innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Error loading skills:', error);
+            }
+        }
+
+        // Load Experiences
+        async function loadExperiences() {
+            try {
+                const response = await fetch('portfolio.php?action=get_experiences');
+                const data = await response.json();
+                if (data.success && data.data.length > 0) {
+                    const html = data.data.map(exp => `
+                        <div class="timeline-item ${exp.is_current ? 'current' : ''}">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h3>${exp.title}</h3>
+                                <p class="company">${exp.company}</p>
+                                <p class="duration">${new Date(exp.start_date).getFullYear()} - ${exp.end_date ? new Date(exp.end_date).getFullYear() : 'Present'}</p>
+                                <p>${exp.description}</p>
+                                ${exp.location ? `<p class="location">📍 ${exp.location}</p>` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+                    document.getElementById('experience-list').innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Error loading experiences:', error);
+            }
+        }
+
+        // Load Testimonials
+        async function loadTestimonials() {
+            try {
+                const response = await fetch('portfolio.php?action=get_testimonials&type=featured');
+                const data = await response.json();
+                if (data.success && data.data.length > 0) {
+                    const html = data.data.map(testi => `
+                        <div class="testimonial-card">
+                            ${testi.client_image ? `<img src="${testi.client_image}" alt="${testi.client_name}" class="testimonial-avatar">` : '<div class="testimonial-avatar-placeholder">👤</div>'}
+                            <div class="testimonial-rating">
+                                ${'⭐'.repeat(testi.rating)}
+                            </div>
+                            <p class="testimonial-text">"${testi.testimonial_text}"</p>
+                            <h4 class="testimonial-author">${testi.client_name}</h4>
+                            ${testi.client_company ? `<p class="testimonial-company">${testi.client_company}</p>` : ''}
+                        </div>
+                    `).join('');
+                    document.getElementById('testimonials-list').innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Error loading testimonials:', error);
+            }
+        }
+
+        // Load Blog Posts
+        async function loadBlogPosts() {
+            try {
+                const response = await fetch('blog.php?action=get_all_posts&limit=6');
+                const data = await response.json();
+                if (data.success && data.data.length > 0) {
+                    const html = data.data.map(post => `
+                        <article class="blog-card">
+                            ${post.featured_image ? `<img src="${post.featured_image}" alt="${post.title}">` : ''}
+                            <h3>${post.title}</h3>
+                            <p class="blog-meta">by ${post.author} • ${post.category}</p>
+                            <p class="blog-excerpt">${post.excerpt || post.content.substring(0, 150)}...</p>
+                            <div class="blog-footer">
+                                <span class="view-count">👁 ${post.view_count}</span>
+                                <a href="blog.php?post=${post.slug}" class="btn-small">Read More</a>
+                            </div>
+                        </article>
+                    `).join('');
+                    document.getElementById('blog-list').innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+            }
+        }
+
+        // Load Technology Filters
+        function loadTechFilters(projects) {
+            const techs = new Set();
+            projects.forEach(p => {
+                if (p.technologies) {
+                    JSON.parse(p.technologies).forEach(t => techs.add(t));
+                }
+            });
+            
+            const select = document.getElementById('filter-tech');
+            techs.forEach(tech => {
+                const option = document.createElement('option');
+                option.value = tech;
+                option.textContent = tech;
+                select.appendChild(option);
+            });
+        }
+
+        // Load Year Filters
+        function loadYearFilters(projects) {
+            const years = [...new Set(projects.map(p => p.year))].sort((a, b) => b - a);
+            const select = document.getElementById('filter-year');
+            years.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                select.appendChild(option);
+            });
+        }
+
+        // Filter by Technology
+        async function filterByTechnology() {
+            const tech = document.getElementById('filter-tech').value;
+            if (!tech) {
+                loadProjects();
+                return;
+            }
+
+            try {
+                const response = await fetch(`search.php?action=filter_by_tech&technology=${encodeURIComponent(tech)}`);
+                const data = await response.json();
+                if (data.success && data.data.data.length > 0) {
+                    const html = data.data.data.map(project => `
+                        <article class="project-card">
+                            <h3>${project.title}</h3>
+                            <p>${project.description}</p>
+                        </article>
+                    `).join('');
+                    document.getElementById('projects-list').innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Error filtering:', error);
+            }
+        }
+
+        // Filter by Year
+        async function filterByYear() {
+            const year = document.getElementById('filter-year').value;
+            if (!year) {
+                loadProjects();
+                return;
+            }
+
+            try {
+                const response = await fetch(`search.php?action=filter_by_year&year=${year}`);
+                const data = await response.json();
+                if (data.success && data.data.data.length > 0) {
+                    const html = data.data.data.map(project => `
+                        <article class="project-card">
+                            <h3>${project.title}</h3>
+                            <p>${project.description}</p>
+                        </article>
+                    `).join('');
+                    document.getElementById('projects-list').innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Error filtering:', error);
+            }
+        }
+
+        // Handle Contact Form Submit
+        async function handleContactSubmit(e) {
+            e.preventDefault();
+            const form = new FormData(document.getElementById('contact-form'));
+            form.append('action', 'create_contact');
+
+            try {
+                const response = await fetch('contact.php', {
+                    method: 'POST',
+                    body: form
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert('Pesan terkirim! Terima kasih telah menghubungi kami.');
+                    document.getElementById('contact-form').reset();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Handle Newsletter Submit
+        async function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            const form = new FormData(document.getElementById('newsletter-form'));
+            form.append('action', 'subscribe_newsletter');
+
+            try {
+                const response = await fetch('portfolio.php', {
+                    method: 'POST',
+                    body: form
+                });
+                const data = await response.json();
+                const msgEl = document.getElementById('newsletter-message');
+                if (data.success) {
+                    msgEl.textContent = '✓ Terima kasih! Silakan cek email Anda untuk verifikasi.';
+                    msgEl.className = 'success';
+                    document.getElementById('newsletter-form').reset();
+                } else {
+                    msgEl.textContent = '✗ ' + data.errors[0];
+                    msgEl.className = 'error';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Search functionality
+        let searchTimeout;
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            const keyword = e.target.value.trim();
+            
+            if (keyword.length < 2) {
+                closeSearchModal();
+                return;
+            }
+
+            searchTimeout = setTimeout(() => {
+                performSearch(keyword);
+            }, 300);
+        });
+
+        async function performSearch(keyword) {
+            try {
+                const response = await fetch(`search.php?action=search&type=all&q=${encodeURIComponent(keyword)}`);
+                const data = await response.json();
+                if (data.success) {
+                    displaySearchResults(data.data);
+                }
+            } catch (error) {
+                console.error('Error searching:', error);
+            }
+        }
+
+        function displaySearchResults(results) {
+            const container = document.getElementById('search-results');
+            let html = '';
+
+            if (results.projects.length > 0) {
+                html += '<h3>Projects</h3>';
+                html += results.projects.map(p => `<div class="search-result"><a href="#projects">${p.title}</a></div>`).join('');
+            }
+
+            if (results.blog_posts.length > 0) {
+                html += '<h3>Blog Posts</h3>';
+                html += results.blog_posts.map(p => `<div class="search-result"><a href="blog.php?post=${p.slug}">${p.title}</a></div>`).join('');
+            }
+
+            if (results.skills.length > 0) {
+                html += '<h3>Skills</h3>';
+                html += results.skills.map(s => `<div class="search-result"><a href="#skills">${s.title}</a></div>`).join('');
+            }
+
+            if (html === '') {
+                html = '<p>No results found</p>';
+            }
+
+            container.innerHTML = html;
+            document.getElementById('search-modal').classList.add('active');
+        }
+
+        function closeSearchModal() {
+            document.getElementById('search-modal').classList.remove('active');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProjects();
+            loadSkills();
+            loadExperiences();
+            loadTestimonials();
+            loadBlogPosts();
+        });
+    </script>
 </body>
 
 </html>

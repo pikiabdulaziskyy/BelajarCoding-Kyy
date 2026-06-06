@@ -1,14 +1,34 @@
 -- ============================================
--- Portfolio Kyy - Database Schema
+-- Portfolio Kyy - Database Schema (v2.0)
 -- ============================================
 -- Author: Piki Abdul Azis
--- Version: 1.0.0
+-- Version: 2.0.0
 -- Last Updated: June 7, 2026
+-- Features: Auth, Blog, Skills, Timeline, Testimonials, Newsletter
 -- ============================================
 
 -- Buat database jika belum ada
 CREATE DATABASE IF NOT EXISTS portfolio_kyy;
 USE portfolio_kyy;
+
+-- ============================================
+-- TABLE: users (Authentication)
+-- ============================================
+-- Menyimpan data user untuk login
+CREATE TABLE IF NOT EXISTS users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255),
+    role ENUM('admin', 'user') DEFAULT 'user',
+    is_active BOOLEAN DEFAULT TRUE,
+    last_login TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_email (email),
+    INDEX idx_role (role)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
 -- TABLE: projects
@@ -23,10 +43,154 @@ CREATE TABLE IF NOT EXISTS projects (
     year INT,
     image_url VARCHAR(255),
     url VARCHAR(255),
+    category VARCHAR(100),
+    is_featured BOOLEAN DEFAULT FALSE,
+    view_count INT DEFAULT 0,
+    created_by INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
     INDEX idx_year (year),
-    INDEX idx_rating (rating)
+    INDEX idx_rating (rating),
+    INDEX idx_category (category),
+    INDEX idx_featured (is_featured)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE: skills
+-- ============================================
+-- Menyimpan data skill dengan level
+CREATE TABLE IF NOT EXISTS skills (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    category VARCHAR(100),
+    level INT CHECK (level >= 1 AND level <= 5),
+    percentage INT CHECK (percentage >= 0 AND percentage <= 100),
+    description TEXT,
+    icon VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_category (category),
+    INDEX idx_level (level)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE: experiences
+-- ============================================
+-- Menyimpan timeline pengalaman kerja
+CREATE TABLE IF NOT EXISTS experiences (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    company VARCHAR(255) NOT NULL,
+    description LONGTEXT,
+    start_date DATE NOT NULL,
+    end_date DATE,
+    is_current BOOLEAN DEFAULT FALSE,
+    location VARCHAR(255),
+    skills_used JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_start_date (start_date),
+    INDEX idx_current (is_current)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE: blog_categories
+-- ============================================
+-- Kategori untuk blog posts
+CREATE TABLE IF NOT EXISTS blog_categories (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    slug VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT,
+    icon VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE: blog_posts
+-- ============================================
+-- Menyimpan artikel blog
+CREATE TABLE IF NOT EXISTS blog_posts (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    content LONGTEXT NOT NULL,
+    excerpt VARCHAR(500),
+    category_id INT,
+    author_id INT NOT NULL,
+    featured_image VARCHAR(255),
+    view_count INT DEFAULT 0,
+    is_published BOOLEAN DEFAULT FALSE,
+    published_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES blog_categories(id) ON DELETE SET NULL,
+    FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_slug (slug),
+    INDEX idx_published (is_published),
+    INDEX idx_category (category_id),
+    FULLTEXT INDEX ft_title_content (title, content)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE: blog_comments
+-- ============================================
+-- Komentar untuk blog posts
+CREATE TABLE IF NOT EXISTS blog_comments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    post_id INT NOT NULL,
+    author_name VARCHAR(255) NOT NULL,
+    author_email VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    is_approved BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES blog_posts(id) ON DELETE CASCADE,
+    INDEX idx_post_id (post_id),
+    INDEX idx_approved (is_approved)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE: testimonials
+-- ============================================
+-- Menyimpan testimonial klien dengan rating
+CREATE TABLE IF NOT EXISTS testimonials (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    client_name VARCHAR(255) NOT NULL,
+    client_company VARCHAR(255),
+    client_image VARCHAR(255),
+    rating INT CHECK (rating >= 1 AND rating <= 5),
+    testimonial_text LONGTEXT NOT NULL,
+    project_id INT,
+    is_featured BOOLEAN DEFAULT FALSE,
+    is_approved BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE SET NULL,
+    INDEX idx_rating (rating),
+    INDEX idx_featured (is_featured),
+    INDEX idx_approved (is_approved)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE: newsletter_subscribers
+-- ============================================
+-- Menyimpan subscriber newsletter
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255),
+    is_active BOOLEAN DEFAULT TRUE,
+    verified BOOLEAN DEFAULT FALSE,
+    verification_token VARCHAR(255),
+    subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    unsubscribed_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_email (email),
+    INDEX idx_active (is_active)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -90,14 +254,6 @@ CREATE TABLE IF NOT EXISTS settings (
     setting_type ENUM('string', 'number', 'boolean', 'json') DEFAULT 'string',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================
--- TABLE: users
--- ============================================
--- Untuk future authentication
-CREATE TABLE IF NOT EXISTS users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(100) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') DEFAULT 'user',

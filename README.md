@@ -1,37 +1,67 @@
-# 🎨 Portofolio Kyy - Full Stack Web Application
+# 🎨 Portofolio Kyy v2.0 - Full Stack Web Application
 
-**Modern portfolio website dengan frontend HTML/CSS/JavaScript dan backend PHP**
+**Professional portfolio website with Complete CMS, Blog, Admin Panel, Authentication, and Advanced Features**
 
-## 📋 Daftar Isi
-- [Fitur](#fitur)
-- [Struktur Proyek](#struktur-proyek)
-- [Setup & Instalasi](#setup--instalasi)
-- [Dokumentasi API](#dokumentasi-api)
-- [Teknologi](#teknologi)
+> 📝 **Version 2.0** - Major upgrade with 10+ new features!
 
 ---
 
-## ✨ Fitur
+## 📋 Quick Links
 
-### Frontend (HTML/CSS/JavaScript)
-- ✅ **Responsive Design** - Mobile, tablet, dan desktop
-- ✅ **Dark Mode Toggle** - Tema terang/gelap dengan local storage
-- ✅ **Advanced Animations** - 16+ jenis animasi smooth
-- ✅ **Particle Background** - Animasi partikel interaktif
-- ✅ **Smooth Scrolling** - Navigasi halus antar section
-- ✅ **Form Validation** - Validasi form real-time
-- ✅ **Toast Notifications** - Notifikasi user feedback
-- ✅ **Scroll Progress Bar** - Progress indicator
-- ✅ **Modal System** - Detail modal untuk project
-- ✅ **Keyboard Shortcuts** - Shortcut keyboard (Ctrl+K, Ctrl+/)
+- 🚀 [Setup Guide](SETUP_GUIDE.md) - Step-by-step installation
+- ✨ [Features List](FEATURES.md) - Complete feature documentation
+- 📚 [API Docs](BACKEND_DOCS.md) - Backend API reference
+- 🔐 [Security](SETUP_GUIDE.md#-security-configuration) - Security best practices
 
-### Backend (PHP)
-- ✅ **REST API** - Endpoint untuk data projects dan stats
-- ✅ **Form Handler** - Proses submit form kontak
-- ✅ **Data Validation** - Validasi email, telepon, dll
-- ✅ **JSON Storage** - Penyimpanan data sederhana (simulasi DB)
-- ✅ **CORS Support** - Cross-origin resource sharing
-- ✅ **Error Handling** - Response error terstruktur
+---
+
+## ✨ Key Features v2.0
+
+### 🔐 Authentication & Admin
+- User registration & login with bcrypt security
+- Admin dashboard with statistics
+- CSRF token protection
+- Role-based access control
+
+### 📝 Blog System
+- Full CRUD operations
+- Categories & tags support
+- Comment moderation
+- Full-text search
+- View counter
+
+### 💼 Portfolio Features
+- Skills showcase with proficiency levels
+- Experience timeline
+- Project gallery with filtering
+- Technology-based filters
+- Year-based filtering
+
+### ⭐ Testimonials & Reviews
+- Client testimonials with 5-star rating
+- Featured testimonials display
+- Client company & photo support
+- Approval workflow
+
+### 📧 Newsletter System
+- Email subscription management
+- Verification tokens
+- Subscriber tracking
+- Unsubscribe functionality
+
+### 🔍 Advanced Search
+- Global search across all content
+- Real-time search suggestions
+- Filter projects by technology
+- Filter projects by year
+- Full-text MySQL search
+
+### 📱 User Experience
+- Fully responsive design (mobile-first)
+- Smooth animations & transitions
+- Real-time form validation
+- Error handling & notifications
+- Accessible forms & navigation
 
 ---
 
@@ -39,15 +69,270 @@
 
 ```
 BelajarCoding-Kyy/
-├── index.html              # File HTML utama
-├── style.css               # Stylesheet (desktop + mobile)
-├── script.js               # JavaScript (16+ kelas, animations)
+├── 📄 index.html           # Homepage (v2.0)
+├── 📄 login.php            # Login & Register
+├── 🎨 style.css            # Complete stylesheet
+├── ⚙️ script.js            # Frontend functionality
 │
-├── api.php                 # REST API endpoints
-├── contact.php             # Contact form handler
-├── config.php              # Konfigurasi aplikasi
-├── functions.php           # Helper functions
+├── 🔐 auth.php             # Authentication handler
+├── 📝 blog.php             # Blog system
+├── 💼 portfolio.php        # Skills, experiences, testimonials
+├── 🔍 search.php           # Search & filter
+├── 📞 contact.php          # Contact form
+├── 🔌 api.php              # REST API endpoints
 │
+├── ⚙️ config.php           # Configuration
+├── 🗄️ db.php               # Database connection
+├── 🛠️ functions.php        # Helper functions
+│
+├── 📋 admin/               # Admin panel
+│   ├── index.php           # Dashboard
+│   ├── projects.php        # Manage projects
+│   ├── blog.php            # Manage blog
+│   ├── skills.php          # Manage skills
+│   ├── experiences.php     # Manage experiences
+│   └── ...                 # Other management pages
+│
+├── 💾 database.sql         # Complete schema (v2.0)
+├── 🌱 seed-data.php        # Sample data loader
+├── 📖 README.md            # This file
+├── 🚀 SETUP_GUIDE.md       # Installation guide
+├── ✨ FEATURES.md          # Feature documentation
+└── 📚 BACKEND_DOCS.md      # API documentation
+```
+
+---
+
+## 🚀 Quick Start
+
+### Minimum Requirements
+- PHP 7.4+
+- MySQL 5.7+
+- Web server (Apache/Nginx)
+
+### Installation (5 minutes)
+
+```bash
+# 1. Clone / Download
+git clone https://github.com/yourusername/portofolio-kyy.git
+cd BelajarCoding-Kyy
+
+# 2. Setup database
+mysql -u root -p < database.sql
+
+# 3. Configure
+# Edit config.php with your database credentials
+
+# 4. Load sample data (optional)
+php seed-data.php
+
+# 5. Access
+# Visit: http://localhost/BelajarCoding-Kyy/
+```
+
+**Full setup guide:** [SETUP_GUIDE.md](SETUP_GUIDE.md)
+
+---
+
+## 🎯 Frontend Features
+
+| Feature | Status | Details |
+|---------|--------|---------|
+| Responsive Design | ✅ | Mobile, tablet, desktop |
+| Search Bar | ✅ | Real-time global search |
+| Project Gallery | ✅ | With filters & tags |
+| Blog Section | ✅ | Full articles & comments |
+| Skills Display | ✅ | Progress bars & levels |
+| Timeline | ✅ | Work experience chronological |
+| Testimonials | ✅ | 5-star reviews carousel |
+| Contact Form | ✅ | Email & validation |
+| Newsletter | ✅ | Email subscription |
+| Dark Mode | 🔄 | Coming in v2.1 |
+
+---
+
+## 🔧 Backend API
+
+### Available Endpoints
+
+```
+GET  /api.php?action=get_projects
+GET  /blog.php?action=get_all_posts
+GET  /portfolio.php?action=get_skills
+GET  /search.php?action=search&q=keyword
+POST /auth.php - Login/Register
+POST /contact.php - Submit message
+POST /portfolio.php - Subscribe newsletter
+```
+
+**Full API docs:** [BACKEND_DOCS.md](BACKEND_DOCS.md)
+
+---
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **HTML5** - Semantic markup
+- **CSS3** - Modern styling & responsive
+- **JavaScript** - Vanilla JS (no frameworks)
+- **Fetch API** - Ajax requests
+
+### Backend
+- **PHP 7.4+** - Server-side logic
+- **MySQL** - Relational database
+- **PDO** - Database abstraction
+- **REST** - API architecture
+
+### Security
+- **Bcrypt** - Password hashing
+- **CSRF Tokens** - Protection
+- **Prepared Statements** - SQL injection prevention
+- **Session Management** - Secure authentication
+
+---
+
+## 📊 Database Schema
+
+10 main tables:
+- `users` - User accounts
+- `projects` - Portfolio projects
+- `skills` - Skills with categories
+- `experiences` - Work history
+- `blog_posts` - Blog articles
+- `blog_categories` - Categories
+- `blog_comments` - Comments
+- `testimonials` - Reviews
+- `newsletter_subscribers` - Emails
+- `contacts` - Messages
+
+**Full schema:** [database.sql](database.sql)
+
+---
+
+## 🔐 Security Features
+
+✅ **Password Security**
+- Bcrypt hashing with salt
+- Minimum 6 character requirement
+
+✅ **CSRF Protection**
+- Token generation & validation
+- Session-based token storage
+
+✅ **SQL Injection Prevention**
+- Prepared statements
+- Parameter binding with PDO
+
+✅ **XSS Protection**
+- HTML escaping
+- Content-type headers
+
+✅ **Session Security**
+- HTTP-only cookies
+- Session timeout
+- Secure session handling
+
+---
+
+## 📱 Responsive Breakpoints
+
+```
+Mobile:  < 640px
+Tablet:  640px - 900px
+Desktop: > 900px
+```
+
+All sections are fully responsive and mobile-optimized.
+
+---
+
+## 🧪 Testing
+
+### Test Admin Panel
+1. Go to: `http://localhost/BelajarCoding-Kyy/login.php`
+2. Login with: `admin@example.com` / `admin123`
+3. Access: `http://localhost/BelajarCoding-Kyy/admin/`
+
+### Test Features
+- [ ] Create blog post
+- [ ] Upload project
+- [ ] Add skill
+- [ ] Submit contact form
+- [ ] Subscribe to newsletter
+- [ ] Search functionality
+- [ ] Filter projects
+
+---
+
+## 📈 Performance
+
+- Optimized queries with indexing
+- Lazy loading for images
+- Caching strategies
+- Compressed CSS & JavaScript
+- Database query optimization
+
+---
+
+## 🐛 Known Issues
+
+None currently. Please report any bugs on GitHub issues.
+
+---
+
+## 🔮 Roadmap v2.1
+
+- [ ] Dark mode toggle
+- [ ] Email notifications
+- [ ] Advanced analytics
+- [ ] Social media integration
+- [ ] Multi-language support
+- [ ] Progressive Web App (PWA)
+- [ ] Two-factor authentication
+- [ ] Backup & restore functionality
+
+---
+
+## 📞 Support
+
+1. **Documentation**: Check [FEATURES.md](FEATURES.md) and [SETUP_GUIDE.md](SETUP_GUIDE.md)
+2. **Issues**: Open GitHub issue
+3. **Discussions**: Start a discussion
+4. **Email**: admin@example.com
+
+---
+
+## 📄 License
+
+© 2026 Kyy. All rights reserved.
+
+This project is for educational and commercial use.
+
+---
+
+## 👏 Credits
+
+**Version History:**
+- v1.0 (Initial) - Basic portfolio
+- v2.0 (Current) - Full CMS with blog, admin panel, advanced features
+
+**Built with ❤️ by Kyy**
+
+---
+
+## ⭐ Show Your Support
+
+If you found this project helpful, please consider giving it a star! ⭐
+
+```
+Your support motivates further development!
+```
+
+---
+
+**Last Updated:** June 7, 2026  
+**Status:** Production Ready ✅  
+**Latest Version:** 2.0.0
 ├── data/                   # Folder data storage (auto-created)
 │   ├── messages.json       # Stored messages
 │   └── contacts.json       # Stored contacts
